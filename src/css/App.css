@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+}
+
 .main {
   background-color: #f0f8ff;
   display: flex;
@@ -7,28 +12,35 @@
   color: rgb(88, 85, 85);
   width: 100%;
   margin: auto;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
   display: block;
   margin: 2px;
+  font-family: "Roboto", sans-serif;
 }
 
 #root {
   background-color: #f0f8ff;
   min-height: 100vh;
+  font-family: "Roboto", sans-serif;
 }
 
 .about {
   margin: 10px 20px 10px;
   width: 100%;
   max-width: 1080px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .button {
   height: 50px;
   border-radius: 10%;
   background-color: #add8e6;
+  font-family: "Roboto", sans-serif;
 }
 
 .nav > * {
@@ -45,8 +57,10 @@ body {
   width: 60%;
   border-radius: 10;
   height: 50%;
+  font-family: "Roboto", sans-serif;
 }
 
 .MuiAppBar-root {
   background-color: white;
+  font-family: "Roboto", sans-serif;
 }

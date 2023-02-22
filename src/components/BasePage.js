@@ -3,6 +3,7 @@ import { NavBar } from "./NavBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet } from "react-router";
 import "../css/App.css";
+import { Typography } from "@mui/material";
 
 export function BasePage() {
   const [logIn, setLogIn] = useState(true);

@@ -12,6 +12,8 @@ import { User } from "./components/User";
 import PrivateRoute from "./components/PrivateRoutes";
 import { useAuth0 } from "@auth0/auth0-react";
 import "../src/css/App.css";
+import { Typography } from "@mui/material";
+import { AppFooter } from "./components/Footer";
 
 function RequireAuth({ isAuthenticated, children }) {
   const location = useLocation();
@@ -42,6 +44,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <AppFooter />
     </div>
   );
 }

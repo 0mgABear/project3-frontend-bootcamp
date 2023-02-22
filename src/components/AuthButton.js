@@ -9,7 +9,13 @@ export const AuthButton = ({ login }) => {
   return (
     <Button
       variant="Contained"
-      sx={{ bgcolor: "#1E90FF", color: "#FFFFFF" }}
+      sx={{
+        bgcolor: "#1E90FF",
+        color: "#FFFFFF",
+        flexGrow: 0,
+        flexShrink: 1,
+        flexBasis: "150px",
+      }}
       onClick={login ? logout : loginWithRedirect}
     >
       {login ? "Sign Out" : "Log In"}
