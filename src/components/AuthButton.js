@@ -12,9 +12,6 @@ export const AuthButton = ({ login }) => {
       sx={{
         bgcolor: "#1E90FF",
         color: "#FFFFFF",
-        flexGrow: 0,
-        flexShrink: 1,
-        flexBasis: "150px",
       }}
       onClick={login ? logout : loginWithRedirect}
     >

@@ -1,40 +1,44 @@
 import React from "react";
-import { Avatar } from "@mui/material";
 import { AuthButton } from "./AuthButton";
 import AppLogo from "../components/applogo.png";
-import { AppBar, Toolbar } from "@mui/material";
+import { Avatar, AppBar, Toolbar, Grid } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import "../css/App.css";
+import { createTheme, ThemeProvider } from "@mui/system";
 
-export function NavBar({ login }) {
+export function NavBar({ login, user }) {
   return (
     <AppBar sx={{ bgcolor: "common.white" }}>
       <Toolbar
         sx={{
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "1fr auto",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: 1600,
-          width: "100%",
-          margin: "0 auto",
         }}
       >
-        <img
-          className="logo"
-          alt="logo"
-          src={AppLogo}
-          sx={{ flexGrow: 1, flexShrink: 0, flexBasis: "auto" }}
-        ></img>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item sx={{ marginRight: 2 }}>
+            <img
+              src={AppLogo}
+              alt="logo"
+              style={{ width: "180px", height: "auto" }}
+            />
+          </Grid>
+          <Grid item sx={{ flexGrow: 1 }}>
+            <input sx={{ width: "100%" }} placeholder="Search for people" />
+          </Grid>
+        </Grid>
         {login ? (
-          <div>
-            <input className="search-bar" placeholder="Search for people" />
-            <Avatar />
-            <AuthButton login={login} />
-          </div>
-        ) : (
-          <>
-            <AuthButton login={login} />
-          </>
-        )}
+          <Grid container spacing={4} alignItems="center">
+            <Grid item>
+              <Avatar />
+            </Grid>
+            <Grid item>
+              <AuthButton login={login} />
+            </Grid>
+          </Grid>
+        ) : null}
       </Toolbar>
     </AppBar>
   );

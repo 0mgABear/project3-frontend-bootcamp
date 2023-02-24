@@ -14,6 +14,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "../src/css/App.css";
 import { Typography } from "@mui/material";
 import { AppFooter } from "./components/Footer";
+import { useEffect } from "react";
+import axios from "axios";
 
 function RequireAuth({ isAuthenticated, children }) {
   const location = useLocation();
@@ -24,8 +26,21 @@ function RequireAuth({ isAuthenticated, children }) {
 }
 
 function App() {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   console.log(isAuthenticated);
+  console.log(user);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const userData = {
+        firstName: "first name",
+        lastName: "last name",
+        email: user.email,
+        company: "company name",
+      };
+      axios.post(`${process.env.REACT_APP_API_SERVER}/users`, userData);
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <div className="main">
