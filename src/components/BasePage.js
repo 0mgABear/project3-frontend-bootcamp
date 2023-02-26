@@ -17,7 +17,9 @@ export function BasePage() {
   return (
     <div>
       <NavBar login={logIn} />
-      <Outlet />
+      <div className="content">
+        <Outlet />
+      </div>
     </div>
   );
 }

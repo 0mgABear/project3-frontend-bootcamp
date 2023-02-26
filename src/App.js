@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
 import { NavBar } from "./components/NavBar";
-import { User } from "./components/User";
+import { UserPage } from "./components/User";
 import PrivateRoute from "./components/PrivateRoutes";
 import { useAuth0 } from "@auth0/auth0-react";
 import "../src/css/App.css";
@@ -19,9 +19,9 @@ import axios from "axios";
 
 function RequireAuth({ isAuthenticated, children }) {
   const location = useLocation();
-  // if (!isAuthenticated) {
-  //   return <Navigate to="/" state={{ from: location }} replace />;
-  // }
+  if (!isAuthenticated) {
+    // return <Navigate to="/" state={{ from: location }} replace />;
+  }
   return children;
 }
 
@@ -44,8 +44,9 @@ function App() {
 
   return (
     <div className="main">
-      <NavBar login={isAuthenticated} />
       <BrowserRouter>
+        <NavBar login={isAuthenticated} />
+
         <Routes>
           <Route path="/" exact index element={<HomePage />} />
           <Route
@@ -53,7 +54,7 @@ function App() {
             exact
             element={
               <RequireAuth isAuthenticated={isAuthenticated}>
-                <User />
+                <UserPage />
               </RequireAuth>
             }
           />

@@ -2,22 +2,40 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Card, CardContent } from "@mui/material";
 
 const ReviewForm = (props) => {
+  const { isAuthenticated, user } = useAuth0();
   const [review, setReview] = useState("");
+  const [currentLoggedInUser, setCurrentLoggedInUser] = useState();
   const handleChange = (event) => {
     setReview(event.target.value);
   };
+
+  const loggedInUserEmail = user.email;
+  console.log(currentLoggedInUser);
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_SERVER}/user?email=${loggedInUserEmail}`
+      )
+      .then((response) => {
+        setCurrentLoggedInUser(response.data);
+      });
+  }, [loggedInUserEmail]);
+
   const handleSubmit = (event) => {
-    event.preventDefault();
     const userIndex = props.userIndex;
     const reviewData = {
       revieweeId: userIndex,
-      reviewerId: 4,
+      reviewerId: currentLoggedInUser[0].id,
       description: review,
       rating: 3,
     };
-    axios.post(`${process.env.REACT_APP_API_SERVER}`, reviewData);
+    axios.post(
+      `${process.env.REACT_APP_API_SERVER}/user/postreview`,
+      reviewData
+    );
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -41,13 +59,20 @@ const UserReviews = (props) => {
     <div>
       {props.userReviews &&
         props.userReviews.map((review) => (
-          <p key={review.id}>Review: {review.description}</p>
+          <Card
+            key={review.id}
+            sx={{ backgroundColor: "#DDEFFF", marginBottom: "16px" }}
+          >
+            <CardContent>
+              <p>Review: {review.description}</p>
+            </CardContent>
+          </Card>
         ))}
     </div>
   );
 };
 
-export function User() {
+export function UserPage() {
   const params = useParams();
   const [accessToken, setAccessToken] = useState("");
   const { isAuthenticated, getAccessTokenSilently, loginWithRedirect } =
@@ -72,12 +97,14 @@ export function User() {
   }, [userIndex]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_SERVER}/users/${userIndex}/reviews`)
-      .then((response) => {
-        setUserReviews(response.data);
-      });
-  }, [userReviews, userIndex]);
+    if (userIndex) {
+      axios
+        .get(`${process.env.REACT_APP_API_SERVER}/users/${userIndex}/reviews`)
+        .then((response) => {
+          setUserReviews(response.data);
+        });
+    }
+  }, [userIndex]);
 
   useEffect(() => {
     if (user) {
@@ -86,7 +113,7 @@ export function User() {
   }, [user]);
 
   return (
-    <div>
+    <div className="user-profile">
       {user ? (
         <div>
           <p>
