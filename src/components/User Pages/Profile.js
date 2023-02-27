@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
+import { FormDialog } from "./AddReviewDialog";
 
 export function Profile({ user }) {
   const [avatar, setAvatar] = useState(null);
-  const [rating, setRating] = useState(5);
 
   useEffect(() => {
     if (user) {
@@ -14,8 +14,6 @@ export function Profile({ user }) {
       }
     }
   });
-
-  const addReview = () => {};
 
   return (
     <div className="profile">
@@ -30,9 +28,8 @@ export function Profile({ user }) {
           <span>Current Company:</span> {user.company}
         </p>
       </div>
-      <button className="add-review" onClick={addReview}>
-        Add Review
-      </button>
+
+      <FormDialog user={user} />
     </div>
   );
 }

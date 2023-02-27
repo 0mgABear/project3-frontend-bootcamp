@@ -17,7 +17,6 @@ export const ReviewForm = (props) => {
         `${process.env.REACT_APP_API_SERVER}/user?email=${loggedInUserEmail}`
       )
       .then((response) => {
-        console.log(response);
         setCurrentLoggedInUser(response.data);
       });
   }, [loggedInUserEmail]);

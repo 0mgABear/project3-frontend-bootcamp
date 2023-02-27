@@ -9,13 +9,11 @@ import { ReviewForm } from "./User Pages/ReviewForm";
 
 export function UserPage() {
   const params = useParams();
-  const [accessToken, setAccessToken] = useState("");
-  const { isAuthenticated, getAccessTokenSilently, loginWithRedirect } =
-    useAuth0();
+
+  const { isAuthenticated } = useAuth0();
   const [user, setUser] = useState(null);
   const [userIndex, setUserIndex] = useState();
   const [userFullName, setUserFullName] = useState("");
-
   if (userIndex !== params.id) {
     setUserIndex(params.id);
   }
