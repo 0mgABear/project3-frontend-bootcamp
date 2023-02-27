@@ -1,20 +1,38 @@
-import React, { useState } from "react";
-import { addreview } from "../../utilities/utils";
+import React, { useEffect, useState } from "react";
+import { Avatar } from "@mui/material";
 
 export function Profile({ user }) {
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(null);
   const [rating, setRating] = useState(5);
+
+  useEffect(() => {
+    if (user) {
+      if (user.picture) {
+        setAvatar(user.picture);
+      } else {
+        setAvatar(null);
+      }
+    }
+  });
+
+  const addReview = () => {};
 
   return (
     <div className="profile">
-      <img alt="avatar" src={avatar} />
+      <Avatar src={avatar} />
+
       <div className="info">
         <p>
-          Name: {user.firstName} {user.lastName}
+          <span>Name: </span>
+          {user.firstName} {user.lastName}
         </p>
-        <p>Current Company: {user.company}</p>
+        <p>
+          <span>Current Company:</span> {user.company}
+        </p>
       </div>
-      <button onClick={addreview}>Add Review</button>
+      <button className="add-review" onClick={addReview}>
+        Add Review
+      </button>
     </div>
   );
 }

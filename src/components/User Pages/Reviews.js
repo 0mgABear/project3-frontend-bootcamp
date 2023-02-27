@@ -1,16 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export function Reviews() {
-  const params = useParams();
-  const [userReviews, setUserReviews] = useState();
+  const userIndex = useParams();
+  const [userReviews, setUserReviews] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/${userIndex}/reviews`)
+      .get(`http://localhost:3000/users/${userIndex.id}/reviews`)
       .then((response) => {
         setUserReviews(response.data);
       });
-  }, [params]);
+  }, [userIndex.id]);
 
-  return <></>;
+  return (
+    <div>
+      {userReviews.map((review) => {
+        <p key={review.id}>Review: {review.description}</p>;
+      })}
+    </div>
+  );
 }

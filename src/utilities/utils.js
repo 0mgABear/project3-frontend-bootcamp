@@ -1,1 +1,1 @@
-export function addreview() {}
+export function addReview() {}

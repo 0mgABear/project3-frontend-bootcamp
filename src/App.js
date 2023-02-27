@@ -3,16 +3,14 @@ import {
   BrowserRouter,
   Route,
   Routes,
-  Navigate,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
 import { NavBar } from "./components/NavBar";
 import { UserPage } from "./components/User";
-import PrivateRoute from "./components/PrivateRoutes";
 import { useAuth0 } from "@auth0/auth0-react";
 import "../src/css/App.css";
-import { Typography } from "@mui/material";
 import { AppFooter } from "./components/Footer";
 import { useEffect } from "react";
 import axios from "axios";
@@ -20,23 +18,21 @@ import axios from "axios";
 function RequireAuth({ isAuthenticated, children }) {
   const location = useLocation();
   if (!isAuthenticated) {
-    // return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
   return children;
 }
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
-  console.log(isAuthenticated);
-  console.log(user);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user) {
       const userData = {
-        firstName: "first name",
-        lastName: "last name",
+        firstName: user.given_name,
+        lastName: user.last_name,
         email: user.email,
-        company: "company name",
+        company: null,
       };
       axios.post(`${process.env.REACT_APP_API_SERVER}/users`, userData);
     }

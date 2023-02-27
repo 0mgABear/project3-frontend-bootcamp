@@ -9,42 +9,50 @@ import {
   TextField,
   Autocomplete,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import "../css/App.css";
-import { createTheme, ThemeProvider } from "@mui/system";
-import { BrowserRouter, Link } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import "../css/Navbar.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SearchBar = () => {
-  const [value, setValue] = useState(null);
-  const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
+export function NavBar() {
+  const { user, isAuthenticated } = useAuth0();
+  const [avatar, setAvatar] = useState("");
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_SERVER}/users`).then((response) => {
-      setUsers(response.data);
-    });
-  }, []);
+    if (user) {
+      setAvatar(user.picture);
+    }
+  }, [isAuthenticated, user]);
 
-  return (
-    <Autocomplete
-      sx={{ maxWidth: 400, marginLeft: 10 }}
-      options={users}
-      getOptionLabel={(user) => `${user.firstName} ${user.lastName}`}
-      renderInput={(params) => (
-        <TextField {...params} label="Search for profiles" />
-      )}
-      onChange={(event, newValue) => {
-        if (newValue) {
-          navigate(`/users/${newValue.id}`);
-        }
-      }}
-    />
-  );
-};
+  const SearchBar = () => {
+    const [value, setValue] = useState(null);
+    const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+      axios
+        .get(`${process.env.REACT_APP_API_SERVER}/users`)
+        .then((response) => {
+          setUsers(response.data);
+        });
+    }, []);
 
-export function NavBar({ login, user }) {
+    return (
+      <Autocomplete
+        sx={{ maxWidth: 400, marginLeft: 10 }}
+        options={users}
+        getOptionLabel={(user) => `${user.firstName} ${user.lastName}`}
+        renderInput={(params) => (
+          <TextField {...params} label="Search for profiles" />
+        )}
+        onChange={(event, newValue) => {
+          if (newValue) {
+            navigate(`/users/${newValue.id}`);
+          }
+        }}
+      />
+    );
+  };
+
   return (
     <AppBar sx={{ bgcolor: "common.white" }}>
       <Toolbar
@@ -66,16 +74,21 @@ export function NavBar({ login, user }) {
             </Link>
           </Grid>
           <Grid item sx={{ flexGrow: 1 }}>
-            {login ? <SearchBar /> : null}
+            {isAuthenticated ? <SearchBar /> : null}
           </Grid>
         </Grid>
-
-        <Grid container spacing={4} alignItems="center">
-          <Grid item>{login ? <Avatar /> : null}</Grid>
-          <Grid item>
-            <AuthButton login={login} />
+        {isAuthenticated ? (
+          <Grid container spacing={4} alignItems="center">
+            <Grid item>
+              <Avatar src={avatar} />
+            </Grid>
+            <Grid item>
+              <AuthButton login={isAuthenticated} />
+            </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <AuthButton login={isAuthenticated} />
+        )}
       </Toolbar>
     </AppBar>
   );

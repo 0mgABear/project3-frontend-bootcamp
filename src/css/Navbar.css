@@ -1,0 +1,19 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+}
+
+.subnavbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  min-width: 200px;
+  width: auto;
+}
+
+.search-bar {
+  min-width: 100px;
+  width: auto;
+}

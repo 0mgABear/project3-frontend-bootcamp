@@ -1,0 +1,25 @@
+.user {
+  padding: 100px; /*adjust later*/
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  min-width: 320px;
+  min-height: 150px;
+  align-items: center;
+  justify-content: space-evenly;
+  background: #add8e6;
+}
+
+.add-review {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  height: 35px;
+  width: 90px;
+}
+
+span {
+  font-weight: bold;
+}

@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavBar } from "./NavBar";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import { Grid, Typography, styled } from "@mui/material";
 
 export function HomePage() {
-  const [logIn, setLogIn] = useState(false);
-  const [avatar, setAvatar] = useState(process.env.REACT_APP_AVATAR);
-  const { isAuthenticated } = useAuth0();
-
-  useEffect(() => {
-    isAuthenticated ? setLogIn(true) : setLogIn(false);
-  }, [isAuthenticated]);
-
   const FeatureImage = styled("img")({
     maxWidth: "60%",
     height: "auto",
