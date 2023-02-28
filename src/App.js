@@ -14,6 +14,7 @@ import "../src/css/App.css";
 import { AppFooter } from "./components/Footer";
 import { useEffect } from "react";
 import axios from "axios";
+import { useState } from "react";
 
 function RequireAuth({ isAuthenticated, children }) {
   const location = useLocation();
@@ -40,16 +41,24 @@ function App() {
   return (
     <div className="main">
       <BrowserRouter>
-        <NavBar login={isAuthenticated} />
+        <NavBar
+          login={isAuthenticated}
+          currentLoggedInUser={currentLoggedInUser}
+        />
 
         <Routes>
-          <Route path="/" exact index element={<HomePage />} />
+          <Route
+            path="/"
+            exact
+            index
+            element={<HomePage currentLoggedInUser={currentLoggedInUser} />}
+          />
           <Route
             path="/users/:id"
             exact
             element={
               <RequireAuth isAuthenticated={isAuthenticated}>
-                <UserPage />
+                <UserPage currentLoggedInUser={currentLoggedInUser} />
               </RequireAuth>
             }
           />

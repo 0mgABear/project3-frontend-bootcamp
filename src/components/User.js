@@ -7,7 +7,7 @@ import { Profile } from "./User Pages/Profile";
 import "../css/User.css";
 import { ReviewForm } from "./User Pages/ReviewForm";
 
-export function UserPage() {
+export function UserPage({ currentLoggedInUser }) {
   const params = useParams();
   const [user, setUser] = useState(null);
   const [userIndex, setUserIndex] = useState();
@@ -36,7 +36,11 @@ export function UserPage() {
     <div>
       {user ? (
         <div className="user">
-          <Profile user={user} />
+          <Profile
+            user={user}
+            currentLoggedInUser={currentLoggedInUser}
+            userIndex={userIndex}
+          />
 
           <div>Reviews</div>
           <UserReviews />

@@ -7,26 +7,14 @@ export const ReviewForm = (props) => {
   const { id } = useParams();
   const { user } = useAuth0();
   const [review, setReview] = useState("");
-  const [currentLoggedInUser, setCurrentLoggedInUser] = useState();
   const handleChange = (event) => {
     setReview(event.target.value);
   };
 
-  const loggedInUserEmail = user.email;
-  useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_SERVER}/user?email=${loggedInUserEmail}`
-      )
-      .then((response) => {
-        setCurrentLoggedInUser(response.data);
-      });
-  }, [loggedInUserEmail]);
-
   const handleSubmit = (event) => {
     const reviewData = {
       revieweeId: id,
-      reviewerId: currentLoggedInUser[0].id,
+      reviewerId: props.currentLoggedInUser[0].id,
       description: review,
       rating: 3,
     };
