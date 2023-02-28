@@ -15,8 +15,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export function NavBar() {
+export function NavBar({ currentLoggedInUser }) {
   const { user, isAuthenticated } = useAuth0();
+  const loggedInUserId = currentLoggedInUser[0].id;
+  const loggedInUserUrl = `users/${loggedInUserId}`;
   const [avatar, setAvatar] = useState("");
   useEffect(() => {
     if (user) {
@@ -80,7 +82,9 @@ export function NavBar() {
         {isAuthenticated ? (
           <Grid container spacing={4} alignItems="center">
             <Grid item>
-              <Avatar src={avatar} />
+              <Link to={loggedInUserUrl}>
+                <Avatar src={avatar} />
+              </Link>
             </Grid>
             <Grid item>
               <AuthButton login={isAuthenticated} />
