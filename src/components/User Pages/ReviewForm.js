@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useParams } from "react-router-dom";
 
 export const ReviewForm = (props) => {
+  const { id } = useParams();
   const { isAuthenticated, user } = useAuth0();
   const [review, setReview] = useState("");
   const [currentLoggedInUser, setCurrentLoggedInUser] = useState();
@@ -22,9 +24,8 @@ export const ReviewForm = (props) => {
   }, [loggedInUserEmail]);
 
   const handleSubmit = (event) => {
-    const userIndex = props.userIndex;
     const reviewData = {
-      revieweeId: userIndex,
+      revieweeId: id,
       reviewerId: currentLoggedInUser[0].id,
       description: review,
       rating: 3,

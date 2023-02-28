@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 
 export function FormDialog({ user }) {
   const [open, setOpen] = useState(false);
+  const [formValues, setFormValues] = useState({});
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,6 +20,12 @@ export function FormDialog({ user }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    console.log(formValues);
   };
 
   return (
@@ -39,15 +46,22 @@ export function FormDialog({ user }) {
               required
               margin="dense"
               id="review"
+              name="review"
               label="Your Review"
               type="text"
-              fullWidth
               variant="standard"
+              onChange={handleChange}
             />
             <Typography>
               Leave a rating for {user.firstName} {user.lastName}
             </Typography>
-            <Rating name="half-rating" defaultValue={2.5} precision={0.5}>
+            <Rating
+              required
+              name="rating"
+              defaultValue={2.5}
+              precision={0.5}
+              onChange={handleChange}
+            >
               Test
             </Rating>
           </FormGroup>

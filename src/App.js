@@ -25,14 +25,15 @@ function RequireAuth({ isAuthenticated, children }) {
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
+  console.log(user);
 
   useEffect(() => {
     if (user) {
       const userData = {
-        firstName: user.given_name,
-        lastName: user.last_name,
+        firstName: user.family_name,
+        lastName: user.given_name,
         email: user.email,
-        company: null,
+        company: "nil",
       };
       axios.post(`${process.env.REACT_APP_API_SERVER}/users`, userData);
     }

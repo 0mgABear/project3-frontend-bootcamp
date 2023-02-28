@@ -42,8 +42,6 @@ export const UserReviews = () => {
     }
   }, [userReviews]);
 
-  console.log(reviewer);
-
   return (
     <div>
       {userReviews &&
