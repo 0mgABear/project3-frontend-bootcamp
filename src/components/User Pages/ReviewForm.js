@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 export const ReviewForm = (props) => {
   const { id } = useParams();
-  const { isAuthenticated, user } = useAuth0();
+  const { user } = useAuth0();
   const [review, setReview] = useState("");
   const [currentLoggedInUser, setCurrentLoggedInUser] = useState();
   const handleChange = (event) => {

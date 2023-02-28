@@ -3,7 +3,7 @@ import { Card, CardContent } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
-import { ConstructionOutlined, RestartAlt } from "@mui/icons-material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export const UserReviews = () => {
   const userIndex = useParams();
@@ -22,24 +22,22 @@ export const UserReviews = () => {
   }, [userIndex]);
 
   useEffect(() => {
-    if (userReviews) {
-      userReviews.map((review) => {
-        axios
-          .get(`${process.env.REACT_APP_API_SERVER}/users/${review.reviewerId}`)
-          .then((res) => {
-            const newReviewer = {
-              first_name: res.data.firstName,
-              last_name: res.data.lastName,
-              company: res.data.company,
-            };
-            setReviewer((prevReviewer) => ({
-              ...prevReviewer,
-              [review.reviewerId]: newReviewer,
-            }));
-          })
-          .catch((err) => console.log(err));
-      });
-    }
+    userReviews.map((review) => {
+      axios
+        .get(`${process.env.REACT_APP_API_SERVER}/users/${review.reviewerId}`)
+        .then((res) => {
+          const newReviewer = {
+            first_name: res.data.firstName,
+            last_name: res.data.lastName,
+            company: res.data.company,
+          };
+          setReviewer((prevReviewer) => ({
+            ...prevReviewer,
+            [review.reviewerId]: newReviewer,
+          }));
+        })
+        .catch((err) => console.log(err));
+    });
   }, [userReviews]);
 
   return (
@@ -51,14 +49,14 @@ export const UserReviews = () => {
             sx={{ backgroundColor: "#DDEFFF", marginBottom: "16px" }}
           >
             <CardContent>
-              <p>Review: </p>
-              <p>{review.description}</p>
-              <Rating value={review.rating} readOnly precision={0.5} />
               <p>
-                Reviewer: {reviewer[review.reviewerId]?.first_name}{" "}
+                Reviewed by: {reviewer[review.reviewerId]?.first_name}{" "}
                 {reviewer[review.reviewerId]?.last_name} (Colleague at:{" "}
                 {reviewer[review.reviewerId]?.company})
               </p>
+              <p>{review.description}</p>
+              <Rating value={review.rating} readOnly precision={0.5} />
+              <DeleteOutlineIcon />
             </CardContent>
           </Card>
         ))}

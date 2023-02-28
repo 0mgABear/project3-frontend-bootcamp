@@ -25,8 +25,6 @@ function RequireAuth({ isAuthenticated, children }) {
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
-  console.log(user);
-
   useEffect(() => {
     if (user) {
       const userData = {

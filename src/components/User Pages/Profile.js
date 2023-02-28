@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
-import { FormDialog } from "./AddReviewDialog";
+import { AddReviewDialog } from "./AddReviewDialog";
 
 export function Profile({ user }) {
   const [avatar, setAvatar] = useState(null);
@@ -29,7 +29,7 @@ export function Profile({ user }) {
         </p>
       </div>
 
-      <FormDialog user={user} />
+      <AddReviewDialog user={user} />
     </div>
   );
 }

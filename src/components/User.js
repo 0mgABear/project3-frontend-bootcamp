@@ -9,8 +9,6 @@ import { ReviewForm } from "./User Pages/ReviewForm";
 
 export function UserPage() {
   const params = useParams();
-
-  const { isAuthenticated } = useAuth0();
   const [user, setUser] = useState(null);
   const [userIndex, setUserIndex] = useState();
   const [userFullName, setUserFullName] = useState("");
@@ -40,11 +38,8 @@ export function UserPage() {
         <div className="user">
           <Profile user={user} />
 
-          <div>
-            Reviews
-            <UserReviews />
-          </div>
-          <ReviewForm user={userFullName} />
+          <div>Reviews</div>
+          <UserReviews />
         </div>
       ) : (
         "Error: User not found"
