@@ -7,7 +7,7 @@ import { Profile } from "./User Pages/Profile";
 import "../css/User.css";
 import { ReviewForm } from "./User Pages/ReviewForm";
 
-export function UserPage() {
+export function UserPage({ currentLoggedInUser }) {
   const params = useParams();
 
   const { isAuthenticated } = useAuth0();
@@ -38,13 +38,20 @@ export function UserPage() {
     <div>
       {user ? (
         <div className="user">
-          <Profile user={user} />
+          <Profile
+            user={user}
+            currentLoggedInUser={currentLoggedInUser}
+            userIndex={userIndex}
+          />
 
           <div>
             Reviews
             <UserReviews />
           </div>
-          <ReviewForm user={userFullName} />
+          <ReviewForm
+            user={userFullName}
+            currentLoggedInUser={currentLoggedInUser}
+          />
         </div>
       ) : (
         "Error: User not found"
